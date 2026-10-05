@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline — The East Africa Podcast Network</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0a0a0a; color: #fff; font-family: Poppins, system-ui, sans-serif; font-weight: 200; text-align: center; padding: 24px; }
+    .eq { display: flex; gap: 3px; align-items: flex-end; height: 40px; justify-content: center; margin-bottom: 24px; }
+    .eq span { width: 5px; background: #f23a2e; border-radius: 2px; animation: eq .6s ease-in-out infinite alternate; }
+    .eq span:nth-child(1) { height: 8px; animation-duration: .4s; }
+    .eq span:nth-child(2) { height: 26px; animation-duration: .7s; }
+    .eq span:nth-child(3) { height: 14px; animation-duration: .55s; }
+    .eq span:nth-child(4) { height: 32px; animation-duration: .8s; }
+    .eq span:nth-child(5) { height: 10px; animation-duration: .45s; }
+    @keyframes eq { from { transform: scaleY(.4); } to { transform: scaleY(1); } }
+    h1 { font-size: 24px; font-weight: 900; margin: 0 0 8px; }
+    p { color: rgba(255,255,255,.6); font-size: 15px; margin: 0; }
+    a { color: #f23a2e; margin-top: 20px; display: inline-block; text-decoration: none; border: 1px solid rgba(255,255,255,.3); padding: 10px 22px; border-radius: 4px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="eq" aria-hidden><span></span><span></span><span></span><span></span><span></span></div>
+    <h1>You are offline</h1>
+    <p>The network needs a connection to stream. Reconnect and try again.</p>
+    <a href="/">Try again</a>
+  </div>
+</body>
+</html>

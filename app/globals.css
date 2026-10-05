@@ -1,0 +1,330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   The East Africa Podcast Network — globals
+   Design tokens & component styles reproduced from design-source/podca-gh-pages
+   (Colorlib "Podca" template). See DESIGN-SOURCE-ANALYSIS.md for the audit.
+   ========================================================================== */
+
+:root {
+  --eapn-primary: #f23a2e;
+  --eapn-ink: #25262a;
+  --eapn-body: #4d4d4d;
+  --eapn-footer: #333333;
+  --eapn-line: #edf0f5;
+  --eapn-cardline: #e6e6e6;
+  --eapn-radius: 4px;
+  --eapn-player-h: 80px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-body antialiased;
+    font-weight: 200;
+    font-size: 17.6px; /* zip: $font-size-base + .1rem */
+    line-height: 1.7;
+  }
+  ::selection {
+    background: #000; /* zip ::selection */
+    color: #fff;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-ink;
+    font-weight: 300;
+  }
+  a {
+    transition: 0.3s all ease; /* zip a */
+  }
+  input, select, textarea {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  /* ---------- Buttons (zip .btn) ---------- */
+  .btn-eapn {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn uppercase relative transition-all duration-200 font-light cursor-pointer select-none;
+    letter-spacing: 0.2em; /* zip .btn-primary */
+    font-size: 12px;
+    padding: 0.85rem 1.7rem;
+    line-height: 1.4;
+    top: 0;
+  }
+  .btn-eapn:hover, .btn-eapn:focus-visible {
+    top: -2px; /* zip .btn:hover */
+    box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9);
+    outline: none;
+  }
+  .btn-eapn:active {
+    top: 0;
+  }
+  .btn-primary-eapn {
+    @apply btn-eapn bg-primary text-white;
+  }
+  .btn-primary-eapn:hover {
+    @apply bg-primary-dark text-white;
+  }
+  .btn-outline-eapn {
+    @apply btn-eapn border border-white/70 text-white bg-transparent;
+    letter-spacing: 0.05em; /* zip .btn default */
+    font-size: 12px;
+  }
+  .btn-outline-eapn:hover {
+    @apply bg-white text-ink;
+  }
+  .btn-dark-eapn {
+    @apply btn-eapn bg-ink text-white;
+    letter-spacing: 0.05em;
+    font-size: 12px;
+  }
+  .btn-dark-eapn:hover {
+    @apply bg-black text-white;
+  }
+  .btn-light-eapn {
+    @apply btn-eapn bg-btnsecondary text-ink;
+    letter-spacing: 0.05em;
+    font-size: 12px;
+  }
+
+  /* ---------- Section heading (zip .site-section-heading: 40x2 red rule) ---------- */
+  .section-heading {
+    @apply text-[30px] text-ink font-bold relative pt-3 inline-block;
+  }
+  .section-heading::before {
+    content: '';
+    @apply absolute top-0 left-0 w-10 h-0.5 bg-primary;
+  }
+  .section-heading.centered::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* ---------- Podcast entry card (zip .podcast-entry) ---------- */
+  .podcast-entry {
+    @apply bg-white shadow-card flex flex-col md:flex-row overflow-hidden;
+  }
+  .podcast-entry .meta-line {
+    @apply text-black/50 text-[13px];
+  }
+  .meta-line .sep {
+    @apply mx-[5px] text-[#ccc];
+  }
+
+  /* ---------- Forms (zip .form-control) ---------- */
+  .field {
+    @apply w-full h-[43px] border border-line bg-white px-3 text-[15px] text-ink rounded-btn outline-none transition-colors;
+  }
+  .field:focus {
+    @apply border-primary;
+    box-shadow: none;
+  }
+  textarea.field {
+    @apply h-auto py-2.5;
+  }
+  .field-label {
+    @apply block text-[12px] uppercase tracking-[0.05em] text-ink font-normal mb-1.5;
+  }
+
+  /* ---------- Card (zip .post-entry border) ---------- */
+  .card-eapn {
+    @apply bg-white border border-cardline rounded-[4px] overflow-hidden;
+  }
+
+  /* ---------- Equalizer bars (spec: 5 bars, 0.4–0.8s, 8–40px) ---------- */
+  .equalizer {
+    @apply flex items-end gap-[3px] h-10;
+  }
+  .equalizer span {
+    @apply w-[5px] bg-primary origin-bottom;
+    height: 8px;
+    animation: eapn-eq 0.6s ease-in-out infinite alternate;
+  }
+  .equalizer span:nth-child(1) { animation-duration: 0.4s; animation-delay: 0s; }
+  .equalizer span:nth-child(2) { animation-duration: 0.7s; animation-delay: 0.08s; }
+  .equalizer span:nth-child(3) { animation-duration: 0.55s; animation-delay: 0.16s; }
+  .equalizer span:nth-child(4) { animation-duration: 0.8s; animation-delay: 0.05s; }
+  .equalizer span:nth-child(5) { animation-duration: 0.45s; animation-delay: 0.12s; }
+  @keyframes eapn-eq {
+    0% { height: 8px; }
+    100% { height: 40px; }
+  }
+
+  /* ---------- Loading screen ---------- */
+  .loading-screen {
+    @apply fixed inset-0 z-[100] bg-night flex flex-col items-center justify-center;
+    transition: opacity 0.3s ease;
+  }
+  .loading-screen.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .loading-wordmark {
+    opacity: 0;
+    animation: eapn-fade-in 0.45s ease-in-out 0.15s forwards;
+  }
+  @keyframes eapn-fade-in {
+    to { opacity: 1; }
+  }
+  .loading-progress {
+    @apply w-[180px] h-[2px] bg-white/15 mt-8 overflow-hidden rounded-full;
+  }
+  .loading-progress i {
+    @apply block h-full bg-primary w-0;
+    animation: eapn-progress 1.45s cubic-bezier(0.25, 0.25, 0.75, 0.75) 0.2s forwards;
+  }
+  @keyframes eapn-progress {
+    0% { width: 0; }
+    70% { width: 82%; }
+    100% { width: 100%; }
+  }
+
+  /* ---------- Hero headline: word by word, 0.1s per word ---------- */
+  .word-in .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: eapn-word 0.45s ease-in-out forwards;
+  }
+  @keyframes eapn-word {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Player slide-up (400ms on first play) ---------- */
+  .player-panel {
+    transform: translateY(110%);
+    transition: transform 0.4s ease-in-out;
+  }
+  .player-panel.visible {
+    transform: translateY(0);
+  }
+
+  /* ---------- Waveform draw-in from left ---------- */
+  .waveform-draw {
+    animation: eapn-waveform 0.9s ease-out;
+  }
+  @keyframes eapn-waveform {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+}
+
+/* ---------- Scroll reveal (AOS equivalent: 800ms, 'slide' easing, once) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.25, 0.75, 0.75), transform 0.8s cubic-bezier(0.25, 0.25, 0.75, 0.75);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal='fade'] { transform: none; }
+[data-reveal='fade-left'] { transform: translateX(-60px); }
+[data-reveal='fade-right'] { transform: translateX(60px); }
+[data-reveal='zoom'] { transform: scale(0.92); }
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Player controls: immediate response, no animation delay ---------- */
+.player-panel button,
+.player-panel input[type='range'] {
+  transition: none;
+}
+
+/* ---------- prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .equalizer span {
+    animation: none !important;
+    height: 24px !important; /* freeze at midpoint */
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    transition-delay: 0ms !important;
+  }
+  .word-in .w {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .player-panel {
+    transition: none !important;
+  }
+  .waveform-draw, .loading-progress i, .loading-wordmark {
+    animation: none !important;
+  }
+  .loading-progress i {
+    width: 100%;
+  }
+  .loading-wordmark {
+    opacity: 1;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+  /* ---------- Mobile full-screen menu items ---------- */
+  .eapn-menu-item {
+    animation: eapn-menu-in 0.3s ease-in-out both;
+  }
+  @keyframes eapn-menu-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ---------- MDX blog content ---------- */
+.mdx-content {
+  @apply text-body text-[16px] leading-[1.85] font-light;
+}
+.mdx-content h2 {
+  @apply text-2xl font-bold text-ink mt-10 mb-4;
+}
+.mdx-content h3 {
+  @apply text-xl font-bold text-ink mt-8 mb-3;
+}
+.mdx-content p {
+  @apply mb-5;
+}
+.mdx-content a {
+  @apply text-primary underline underline-offset-4;
+}
+.mdx-content ul {
+  @apply list-disc pl-6 mb-5 space-y-2;
+}
+.mdx-content ol {
+  @apply list-decimal pl-6 mb-5 space-y-2;
+}
+.mdx-content blockquote {
+  @apply border-l-2 border-primary pl-5 italic text-ink/80 my-6;
+}
+.mdx-content img {
+  @apply rounded-[4px] my-6 w-full h-auto;
+}
+.mdx-content strong {
+  @apply font-bold text-ink;
+}
+
+/* ---------- Wavesurfer containers ---------- */
+.ws-bar [data-id] {
+  @apply rounded;
+}
+
+/* thin scrollbar for horizontal carousels */
+.snap-row {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+.snap-row::-webkit-scrollbar {
+  height: 6px;
+}
+.snap-row::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+}

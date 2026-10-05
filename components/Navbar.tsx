@@ -43,11 +43,18 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
+        className={`fixed top-0 inset-x-0 z-50 w-full transition-colors duration-300 ${
           overHero ? 'bg-transparent' : 'bg-night/95 backdrop-blur border-b border-white/10'
         }`}
       >
-        <div className="max-w-container mx-auto px-4">
+        {/* Scrim: keeps the white links legible on light parts of the hero photo */}
+        {overHero && (
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/25 to-transparent pointer-events-none"
+            aria-hidden
+          />
+        )}
+        <div className="relative max-w-container mx-auto px-4">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0" aria-label={site.name}>
@@ -105,6 +112,9 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+
+      {/* The header is fixed, so pages without a full-bleed hero need the 72px back. */}
+      {!isHome && <div className="h-[72px] bg-night" aria-hidden />}
 
       {/* Mobile full-screen overlay menu */}
       {open && (
